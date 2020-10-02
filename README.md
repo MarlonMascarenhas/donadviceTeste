@@ -19,6 +19,7 @@ yarn build
 ```
 yarn lint
 ```
+### Tecnologias utilizadas:
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+vue/cli 4.5.6
+nodeJs 12.18.3
