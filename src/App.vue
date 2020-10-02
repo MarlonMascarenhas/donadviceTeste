@@ -340,7 +340,7 @@ export default {
       width: 100%;
     }
     .bemVindo{
-      top: 3%;
+      top: 10%;
     }
     .formBemVindo {
       position: unset;
