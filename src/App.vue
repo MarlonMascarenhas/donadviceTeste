@@ -8,7 +8,7 @@
         <h1 class="title"> Bem Estar </h1>
         <spam class="text"> Soluções completas para viver mais e melhor </spam>
 
-        <button class="buttonBemVindo"> Quero uma consultoria </button>
+        <button class="buttonBemVindo" v-on:click="consultoria"> Quero uma consultoria </button>
       </div>
 
       <div class="formBemVindo">
@@ -18,7 +18,7 @@
         <form
           id="formPlano"
           @submit="checkForm"
-          action="#"
+          action=""
           method="post"
         >
         <p>
@@ -97,35 +97,56 @@
         Blog
       </div>
       <div class="noticiasBlog">
-        <div class="noticia">
+        <div class="noticia" v-for="post of posts.slice(0, 10)" v-bind:key="post.id">
           <img class="imagemNoticia" src="https://picsum.photos/650" alt="imagem Noticia">
-          <spam class="titleNoticia"> Entenda mais sobre o crescimento do marketing digital no Brasil </spam>
-          <spam class="textNoticia"> De acordo com o IBGE, o número de pessoas que acessam a internet vem crescendo a cada dia. Já
-            são mais de 100 milhões de pessoas conectadas no Brasil, considerand... </spam>
+          <spam class="titleNoticia"> {{ post.title }} </spam>
+          <spam class="textNoticia"> {{ post.body }} </spam>
 
           <div class="buttonNoticia">
             <button class="buttonContinua"> Continuar </button>
           </div>
         </div>
-        <div class="noticia">
-          <img class="imagemNoticia" src="https://picsum.photos/650" alt="imagem Noticia">
-          <spam class="titleNoticia"> Entenda mais sobre o crescimento do marketing digital no Brasil </spam>
-          <spam class="textNoticia"> De acordo com o IBGE, o número de pessoas que acessam a internet vem crescendo a cada dia. Já
-            são mais de 100 milhões de pessoas conectadas no Brasil, considerand... </spam>
-          
-          <div class="buttonNoticia">
-            <button class="buttonContinua"> Continuar </button>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
+  
   name: 'App',
+  data() {
+    return {
+      posts: null,
+      name: null,
+      email: null,
+      estCivil: null,
+      prof: null,
+      tel: null,
+      renMensal: null,
+
+    }
+  },
+  mounted () {
+    var self = this
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+    .then(response => {
+      self.posts = response.data
+    })
+    .catch (e => {
+      console.log(e);
+    })
+  },
+  methods: {
+    consultoria: function (event) {
+      console.log(event);
+    },
+    checkForm: function (event) {
+      console.log(event)
+    }
+  }
 }
 </script>
 
@@ -267,15 +288,19 @@ export default {
   .noticiasBlog{
     display: flex;
     padding: 2em 3em 1em;
-  }
-  .noticia:first-child{
-    margin-right: 17px;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .noticia{
     border: 2px solid #292f6a;
     display: flex;
+    margin-top: 15px;
+    margin-right: 10px;
+    flex: 0 0 50%;
+    max-width: 48%;
     flex-direction: column;
+   
   }
   .titleNoticia{
     color: #323469;
@@ -295,6 +320,7 @@ export default {
   .buttonNoticia{
     background-color: #313365;
     height: 70px;
+    margin-top: auto;
     border: 2px solid #292f6a;
     display: flex;
     justify-content: center;
@@ -308,5 +334,90 @@ export default {
     color: #FFF;
     background-color: #ef962e;
     border: none;
+  }
+  @media only screen and (max-width: 720px) and (min-width: 321px) {
+    .baner {
+      width: 100%;
+    }
+    .bemVindo{
+      top: 3%;
+    }
+    .formBemVindo {
+      position: unset;
+      top: unset;
+      margin-top: 60%;
+      width: 275px;
+      padding: 1em 2em 1em;
+    }
+    .penseNisso {
+      margin-top: 15px;
+    }
+    .noticiasBlog {
+      flex-direction: column;
+      padding: 1em 1em 1em;
+    }
+    .noticia:first-child{
+      margin-right: unset;
+    }
+    .noticia{
+      margin-bottom: 10px;
+      margin-top: 0;
+      margin-right: 0;
+      flex: none;
+      max-width: none;
+    }
+    .imagemNoticia{
+      max-width: 100%;
+    }
+  } 
+  @media only screen and (max-width: 320px){
+    .baner {
+      width: 107%;
+    }
+    .bemVindo{
+      top: 3%;
+      margin-left: 15px;
+    }
+    .formBemVindo {
+      position: unset;
+      top: unset;
+      margin-left: 15px;
+      transform: unset;
+      margin-top: 68%;
+      width: 275px;
+      padding: 1em 2em 1em;
+    }
+    .noticia{
+      margin-top: 0;
+      margin-right: 0;
+      flex: none;
+      max-width: none;
+    }
+  }
+  @media only screen and (max-width: 900px) and (min-width: 720px){
+     .baner {
+      width: 100%;
+    }
+    .bemVindo{
+      top: 21%;
+      margin-left: 15px;
+    }
+    .formBemVindo {
+      margin-left: 15px;
+      position: absolute;
+      top: 35%;
+      transform: translateX(-1%);
+      width: 275px;
+      padding: 1em 2em 1em;
+    }
+    .penseNisso {
+      margin-top: 21%;
+      margin-left: 23px;
+    }
+  }
+  @media only screen and (max-width: 1366px) and (min-width: 900px){
+    .formBemVindo{
+      top: 41%;
+    }
   }
 </style>
